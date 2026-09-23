@@ -1,17 +1,17 @@
 ﻿#
-#$domains2cutover = "@source.zarenko.net", "@azitc75.zarenko.net", "@azitc75.zarenko.net"
+#$domains2cutover = "@alt.example.com", "@neu.example.com", "@neu.example.com"
 # 1 domain
-$domains2cutover = @('@source.zarenko.net')
+$domains2cutover = @('@alt.example.com')
 # more domains
 # 3
 #$domains2cutover = '@dom1.de', '@dom2.de', '@dom3.de'
 # 5
-#$domains2cutover = '@dom1.de', '@dom2.de', '@dom3.de', '@source.zarenko.net', 'test.zarenko.net'
+#$domains2cutover = '@dom1.de', '@dom2.de', '@dom3.de', '@alt.example.com', 'example.com'
 
 $domaincount = $domains2cutover.Count
 
 $remainingdomain = "@azitc75.onmicrosoft.com"
-$onpremUpnDomain2add = "@test.local"
+$onpremUpnDomain2add = "@example.local"
 
 # Pfad zur Original Exportdatei mit diesen per UI exportierten Regeln
 <# Export of these rules:

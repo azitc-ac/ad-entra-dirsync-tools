@@ -62,7 +62,7 @@ $scriptDirectory = "C:\Powershell"
 
 $OUs = get-OUs
 $OUs = $OUs | ogv -PassThru -Title "Select the OUs containing the relevant user objects..."
-$ServiceAccount = "HOME\svc_ADCleanup"
+$ServiceAccount = "EXAMPLE\svc_ADCleanup"
 $Principal = $ServiceAccount
 
 #region START get values for objecttype guids for friendly ACL display

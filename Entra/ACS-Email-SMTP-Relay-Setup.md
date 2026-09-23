@@ -9,7 +9,7 @@ Resource Group
  ├─ CommunicationService        (comsvc-edge)         → SMTP-Endpunkt smtp.azurecomm.net, Auth via Entra App
  │   └─ SmtpUsernames/<name>    (acs-emailsvc-edge)    → verknüpft Entra App ↔ SMTP-Login-Username
  └─ EmailService                (acs-email-edge)
-     └─ Domains/<domain>        (test.zarenko.net)     → DNS-verifizierte Absenderdomain
+     └─ Domains/<domain>        (example.com)     → DNS-verifizierte Absenderdomain
          └─ SenderUsernames/<n> (DoNotReply)            → erlaubte MailFrom-Adressen unter der Domain
 
 Entra ID (Tenant-Ebene, unabhängig von Subscription!):
@@ -67,10 +67,10 @@ Bis zu **100 SenderUsername/MailFrom-Ressourcen pro Domain** (offizielles Servic
 **Wie füge ich eine weitere Absenderadresse hinzu?**
 ```powershell
 az communication email domain sender-username create `
-    --domain-name test.zarenko.net --email-service-name acs-email-edge -g rg-comsvc-edge `
+    --domain-name example.com --email-service-name acs-email-edge -g rg-comsvc-edge `
     --sender-username Reports --username Reports --display-name "Reports"
 ```
-Ergibt die Absenderadresse `Reports@test.zarenko.net`. Zum Entfernen: `sender-username delete` mit denselben Parametern (ohne `--username`/`--display-name`).
+Ergibt die Absenderadresse `reports@example.com`. Zum Entfernen: `sender-username delete` mit denselben Parametern (ohne `--username`/`--display-name`).
 
 **Wie viele Domains kann ich mit einer Communication-Service-Ressource verknüpfen?**
 Bis zu **100 verlinkte Domains** pro `CommunicationService`-Ressource (`--linked-domains` ist eine Liste).

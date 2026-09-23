@@ -11,7 +11,7 @@ Voraussetzungen:
 
 Beispiel (Testtenant, wie beim ersten Aufbau verwendet):
   .\New-AcsEmailRelay.ps1 -ResourceGroupName rg-comsvc-edge -CommServiceName comsvc-edge `
-      -EmailServiceName acs-email-edge -DomainName test.zarenko.net `
+      -EmailServiceName acs-email-edge -DomainName example.com `
       -EntraApplicationId 7d533e91-3813-48a6-9264-73580bbc4bd2 -EntraTenantId 75d1ad31-7a71-44c2-bac4-0a3c49d44eda `
       -SmtpLoginUsername edge-relay-svc -UseAzureDns -DnsZoneResourceGroup DNS
 

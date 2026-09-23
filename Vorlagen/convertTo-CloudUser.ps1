@@ -8,7 +8,7 @@
 
 $cloudTenant = "zarenko.onmicrosoft.com"
 $cleandatetime = get-date -uformat "%Y-%m-%d_%H-%M-%S"
-$outfile="C:\Users\administrator\Documents\AllUsersWithImmutableId"+"_"+$cleandatetime+".csv"
+$outfile="C:\Temp\AllUsersWithImmutableId"+"_"+$cleandatetime+".csv"
 
 Connect-MgGraph -Scopes 'User.ReadWrite.All'
 #Connect-MgGraph -Scopes 'User.ReadWrite.All, Domain.ReadWrite.All, Directory.AccessAsUser.All'
@@ -32,7 +32,7 @@ $itemcount=1
 Write-Host "`nExporting user accounts to CSV and setting $($extattr)" -ForegroundColor Cyan
 foreach($user in $users){
     $OldUPN = $user.userPrincipalName
-    #$NewUPN = "mig3@zarenko.net"    
+    #$NewUPN = "admin@example.com"    
  
     $UserName = ($OldUPN -split '@')[0]
     $tempUPN = "${userName}@${cloudTenant}"
@@ -80,7 +80,7 @@ $itemcount = 1
 $itemtotalcount=$Users.Count
 foreach($user in $users){
     $OldUPN = $user.userPrincipalName
-    #$NewUPN = "mig3@zarenko.net"    
+    #$NewUPN = "admin@example.com"    
  
     $UserName = ($OldUPN -split '@')[0]
     $tempUPN = "${userName}@${cloudTenant}"
