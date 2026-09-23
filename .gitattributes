@@ -1,0 +1,4 @@
+# Reine Windows-Werkzeuge: Zeilenenden bleiben, wie sie sind (CRLF).
+# Keine Normalisierung, damit PowerShell-Dateien mit UTF-8-BOM und die
+# daraus gebauten Binaerdateien unveraendert durch das Repo gehen.
+* -text

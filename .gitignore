@@ -1,0 +1,11 @@
+﻿# Windows/PowerShell
+Thumbs.db
+desktop.ini
+*.bak
+*~
+
+# Build-Zwischenstände
+*.pdb
+
+# lokale Konfiguration mit Umgebungsbezug
+config.json
