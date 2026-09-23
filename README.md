@@ -1,4 +1,4 @@
-# ad-entra-dirsync-tools
+﻿# ad-entra-dirsync-tools
 
 Werkzeuge rund um Identitäten: Active Directory on-premises, Entra ID und die Synchronisation
 dazwischen. Ein Ordner je Bereich, jedes Skript für sich lauffähig – keine gemeinsame Laufzeit,
