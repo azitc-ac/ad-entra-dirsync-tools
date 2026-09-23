@@ -2,24 +2,12 @@
 
 Werkzeuge, die nur Active Directory on-premises betreffen.
 
-## Invoke-ADAssessment.ps1
+## Nicht hier: Invoke-ADAssessment
 
-Nimmt eine Domäne auf und schreibt einen HTML-Bericht über Gesundheit, Sicherheit und Hygiene –
-**rein lesend**. `dcdiag` und `repadmin` werden nur abgefragt, nichts wird verändert.
-
-```powershell
-.\Invoke-ADAssessment.ps1
-.\Invoke-ADAssessment.ps1 -OutputPath D:\Berichte\Kunde -InactiveDays 180
-```
-
-`-InactiveDays` (Standard 90) legt fest, ab wann ein Konto als inaktiv gilt; ohne `-OutputPath`
-landet der Bericht in einem Ordner mit Zeitstempel im aktuellen Verzeichnis.
-
-Gedacht als schlanke Vorstufe zu den großen Werkzeugen (Purple Knight, ADxRay, BloodHound,
-Locksmith, GPOZaurr): Es liefert in wenigen Minuten den Überblick, mit dem sich entscheiden lässt,
-wo ein tieferer Blick nötig ist. Für Übernahmen und Erstaufnahmen.
-
-Ausführen mit forstweiten Leserechten, am besten auf einem DC oder Verwaltungshost mit RSAT.
+Die read-only Bestandsaufnahme einer Domäne mit HTML-Bericht hat ein eigenes Repo:
+**[azitc-ac/Invoke-ADAssessment](https://github.com/azitc-ac/Invoke-ADAssessment)** – dort liegt
+sie zusammen mit fünf weiteren Prüfskripten (`Test-LdapsBind`, `Test-LdapsRevocation`,
+`Get-LdapBindMetric`, `Get-DcMemoryPressure`, `Get-DnsStaleRecords`).
 
 ## Delegate-ADUserAdmin.ps1
 

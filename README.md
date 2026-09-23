@@ -7,12 +7,24 @@ keine Installation.
 | Ordner | Werkzeug | Kurz |
 |---|---|---|
 | [AD](AD/) | `Manage-ADGroupMembers.ps1` | Gruppenmitglieder pflegen – Oberfläche mit Änderungserkennung |
+| | `Delegate-ADUserAdmin.ps1` | Benutzerverwaltung auf einer OU delegieren, über `dsacls` |
 | [Entra](Entra/) | `New-AcsEmailRelay.ps1` | Azure Communication Services als SMTP-Relay aufbauen, samt Setup-Doku |
 | [DirSync](DirSync/) | `Set-UpnMailAndProxy.ps1` | UPN, mail und proxyAddresses auf eine neue Domäne umstellen – mit Rückweg |
 | | `Get-ImmutableIdForUpn.ps1` | Welcher Anker gilt je Benutzer: ObjectGUID oder ConsistencyGuid |
 | | `Get-PTAAuthEvents.ps1` | Anmeldungen über Pass-through Authentication im Klartext |
-| | `DeviceSyncer.ps1` | AD-Computerzertifikate zum Entra-Gerät übertragen |
 | [Vorlagen](Vorlagen/) | drei Skripte | Fertige Logik mit festen Werten – vor dem Lauf anpassen |
+
+## Was bewusst nicht hier liegt
+
+Diese Themen haben eigene Repos, weil sie über ein Skript hinausgewachsen sind – mit Installer,
+Konfiguration, Tests oder Begleitwerkzeugen:
+
+| Repo | |
+|---|---|
+| [Invoke-ADAssessment](https://github.com/azitc-ac/Invoke-ADAssessment) | Bestandsaufnahme einer Domäne als HTML-Bericht, plus fünf LDAP-/DC-Prüfskripte |
+| [DeviceSyncer](https://github.com/azitc-ac/DeviceSyncer) | Hybrid-Geräte von AD nach Entra abgleichen, samt Einrichtung |
+| [Send-SMTPOAuth](https://github.com/azitc-ac/Send-SMTPOAuth) | Mailversand über Exchange Online mit XOAUTH2 |
+| [exo-smtp-relay](https://github.com/azitc-ac/exo-smtp-relay) | SMTP-Relay als Dienst mit Weboberfläche |
 
 ## Warum diese drei Bereiche zusammen
 

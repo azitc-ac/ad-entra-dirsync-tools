@@ -63,29 +63,13 @@ Sicherheitsprotokoll des Agent-Servers, gefiltert auf
 Auf dem Server ausführen, auf dem der Agent läuft. Standard sind die letzte Stunde und 50
 Ereignisse.
 
-## DeviceSyncer.ps1
+## Nicht hier: DeviceSyncer
 
-Überträgt das Computerzertifikat aus `userCertificate` eines AD-Computerobjekts in die
-`alternativeSecurityIds` (Typ 2) des zugehörigen Entra-Geräts – der Weg, über den ein
-hybrid eingebundenes Gerät seine Identität nachweist.
-
-```powershell
-.\DeviceSyncer.ps1 -SearchBase 'OU=Clients,DC=example,DC=com' -WhatIf
-.\DeviceSyncer.ps1 -SearchBase 'OU=Clients,DC=example,DC=com'
-.\DeviceSyncer.ps1 -SearchBase '...' -ForceRecreateOnMismatch
-```
-
-Die zu übertragenden Geräte werden in einer Auswahlliste bestätigt. `-ForceRecreateOnMismatch`
-legt den Eintrag neu an, wenn am Entra-Gerät bereits ein abweichender Wert steht. `-LogPath`
-bestimmt das Protokoll, `-GraphScopes` die angeforderten Berechtigungen (Standard
-`Device.ReadWrite.All` und `Directory.AccessAsUser.All`).
-
-> **Vor dem ersten Lauf ändern:** `-SearchBase` hat einen Standardwert aus der Laborumgebung
-> (`OU=TEMP,OU=Clients,OU=HomeOU,DC=home,DC=local`). Immer explizit angeben – oder den Standard
-> im Skript anpassen.
-
-Der `-WhatIf`-Schalter ist hier ein eigener Parameter, kein `SupportsShouldProcess`. Er wirkt,
-aber `-Confirm` gibt es nicht.
+Das Übertragen von Computerzertifikaten aus AD in die `alternativeSecurityIds` der Entra-Geräte
+hat ein eigenes Repo: **[azitc-ac/DeviceSyncer](https://github.com/azitc-ac/DeviceSyncer)** –
+dort mit Installationsskript, AD-Vorbereitung, Konfigurationsdatei und den Vorstufen im
+`PoC`-Ordner. Es schließt die Lücke, die Entra Cloud Sync für Umgebungen ohne Entra Connect Sync
+lässt.
 
 ## Voraussetzungen
 
