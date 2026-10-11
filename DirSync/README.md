@@ -141,14 +141,6 @@ Ordner-ACL; der KDS-Root-Key bleibt).
   senken; eine bereits größere Datei schrumpft erst beim Archivieren und Leeren
   (`wevtutil epl` / `wevtutil cl`), nicht durch die Einstellung allein.
 
-## Nicht hier: DeviceSyncer
-
-Das Übertragen von Computerzertifikaten aus AD in die `alternativeSecurityIds` der Entra-Geräte
-hat ein eigenes Repo: **[azitc-ac/DeviceSyncer](https://github.com/azitc-ac/DeviceSyncer)** –
-dort mit Installationsskript, AD-Vorbereitung, Konfigurationsdatei und den Vorstufen im
-`PoC`-Ordner. Es schließt die Lücke, die Entra Cloud Sync für Umgebungen ohne Entra Connect Sync
-lässt.
-
 ## Voraussetzungen
 
 Windows PowerShell 5.1. `Set-UpnMailAndProxy` und `Get-ImmutableIdForUpn` brauchen das Modul
