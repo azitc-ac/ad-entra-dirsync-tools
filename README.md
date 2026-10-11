@@ -12,6 +12,7 @@ keine Installation.
 | [DirSync](DirSync/) | `Set-UpnMailAndProxy.ps1` | UPN, mail und proxyAddresses auf eine neue Domäne umstellen – mit Rückweg |
 | | `Get-ImmutableIdForUpn.ps1` | Welcher Anker gilt je Benutzer: ObjectGUID oder ConsistencyGuid |
 | | `Get-PTAAuthEvents.ps1` | Anmeldungen über Pass-through Authentication im Klartext |
+| | `Add-NewComputerToGroup.ps1` | Neue Computerkonten (Event 4741) automatisch in die Sync-Gruppe aufnehmen |
 | [Vorlagen](Vorlagen/) | drei Skripte | Fertige Logik mit festen Werten – vor dem Lauf anpassen |
 
 ## Was bewusst nicht hier liegt

@@ -1,7 +1,7 @@
 # DirSync
 
 Alles, was zwischen Active Directory und Entra ID vermittelt: die Umstellung von Anmeldenamen,
-der Anker für die Synchronisation, die Anmeldung über Pass-through Authentication und der
+der Anker für die Synchronisation, die Aufnahme neuer Computer in die Sync-Gruppe, die Anmeldung über Pass-through Authentication und der
 Abgleich von Geräten.
 
 ## Set-UpnMailAndProxy.ps1
@@ -63,6 +63,29 @@ Sicherheitsprotokoll des Agent-Servers, gefiltert auf
 Auf dem Server ausführen, auf dem der Agent läuft. Standard sind die letzte Stunde und 50
 Ereignisse.
 
+## Add-NewComputerToGroup.ps1
+
+Nimmt neu angelegte Computerkonten automatisch in eine AD-Gruppe auf – ausgelöst durch das
+Security-Event 4741 (Scheduled Task mit Event-Trigger, kein Polling). Gedacht für Umgebungen, in
+denen eine Gruppe (Standard `SYNC-Devices-to-ENTRA`) bestimmt, welche Geräte nach Entra ID
+synchronisiert werden: Ohne Aufnahme in die Gruppe bleibt ein neuer Computer in der Cloud unsichtbar.
+Das Skript automatisiert nur diese Aufnahme; Scoping und Sync-Konfiguration bleiben außerhalb.
+
+```powershell
+.\Add-NewComputerToGroup.ps1 -CheckPol      # erzeugt die Audit-Policy das Event 4741?
+.\Add-NewComputerToGroup.ps1 -CreateTask    # Setup: fragt Zielgruppe und OUs ab, delegiert, legt Task an, testet
+.\Add-NewComputerToGroup.ps1 -RemoveGmsa    # früher angelegtes gMSA samt Rechten aufräumen
+```
+
+- Event 4741 entsteht nur auf dem DC, der das Konto anlegt → Task auf **jedem** DC einrichten.
+- Der Task läuft als SYSTEM; das Computerkonto des DC bekommt Schreibrecht auf `member` der Gruppe.
+  Alternativ `-UseGmsa` (braucht KDS-Root-Key und „Log on as a batch job“).
+- `-OuDn "DN1;DN2"` beschränkt auf Computer aus diesen OUs (inkl. Unter-OUs); Trenner `;`, da DNs
+  Kommas enthalten. Geprüft wird der Ort zum Zeitpunkt des Events.
+- Der Trigger reicht den Kontonamen per `ValueQueries` durch; das große Security-Log wird nicht
+  durchsucht. gMSAs lösen ebenfalls 4741 aus und werden übersprungen.
+- Log: `%ProgramData%\ADWeb\Add-NewComputerToGroup.log`
+
 ## Nicht hier: DeviceSyncer
 
 Das Übertragen von Computerzertifikaten aus AD in die `alternativeSecurityIds` der Entra-Geräte
@@ -76,3 +99,4 @@ lässt.
 Windows PowerShell 5.1. `Set-UpnMailAndProxy` und `Get-ImmutableIdForUpn` brauchen das Modul
 `ActiveDirectory`, `DeviceSyncer` zusätzlich `Microsoft.Graph` und `Out-GridView`.
 `Get-PTAAuthEvents` läuft auf dem Agent-Server und braucht Leserecht auf dem Sicherheitsprotokoll.
+`Add-NewComputerToGroup` läuft als Administrator auf jedem DC (AD-DS-Rolle, Audit „Computer Account Management“).
