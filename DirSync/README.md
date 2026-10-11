@@ -65,6 +65,7 @@ Ereignisse.
 
 ## Add-NewComputerToGroup.ps1
 
+Gedacht, um mit Entra Cloud Sync und Device Sync sinnvoll mit Gruppen in den Scoping Filtern arbeiten zu können.
 Nimmt neu angelegte Computerkonten automatisch in eine AD-Gruppe auf – ausgelöst durch das
 Security-Event 4741 (Scheduled Task mit Event-Trigger, kein Polling). Gedacht für Umgebungen, in
 denen eine Gruppe (Standard `SYNC-Devices-to-ENTRA`) bestimmt, welche Geräte nach Entra ID
