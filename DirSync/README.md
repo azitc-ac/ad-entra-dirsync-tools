@@ -86,6 +86,60 @@ Das Skript automatisiert nur diese Aufnahme; Scoping und Sync-Konfiguration blei
   durchsucht. gMSAs lösen ebenfalls 4741 aus und werden übersprungen.
 - Log: `%ProgramData%\ADWeb\Add-NewComputerToGroup.log`
 
+### Entwurfsgeschichte von Add-NewComputerToGroup
+
+Warum das Skript so aussieht, wie es aussieht – inklusive der Sackgassen.
+
+**Ausgangsfrage:** Neue Computerobjekte sollen ohne Polling in die Sync-Gruppe. Ein passendes
+Ereignis gibt es: Security-Event **4741** („Computerkonto erstellt“). Es entsteht nur auf dem DC,
+der das Konto angelegt hat – deshalb braucht jeder DC seinen eigenen Task. Voraussetzung ist die
+Audit-Subkategorie „Computer Account Management“ (Success); `-CheckPol` prüft die *effektive*
+Policy (`AuditQuerySystemPolicy`), nicht nur die Konfiguration.
+
+**Erster Entwurf: Task als gMSA.** Idee: kein Passwort, minimale Rechte. Das Setup legte das gMSA
+an (KDS-Root-Key, `PrincipalsAllowedToRetrieveManagedPassword`), gab ihm Schreibrecht auf `member`
+der Gruppe und Leserecht aufs Security-Log (Event Log Readers) und versuchte, das Recht „Log on as
+a batch job“ über die lokale Gruppe Performance Log Users (S-1-5-32-559) zu erteilen. Das Skript
+prüft dieses Recht nur als **Hinweis** (`secedit /export /areas USER_RIGHTS`), es ändert keine GPO.
+
+**Warum das gMSA aufgegeben wurde:** Der Task startete nie. Task Scheduler meldete 0x80070569,
+das Security-Log Event 4625 mit Status 0xC000015B („Anmeldetyp nicht gewährt“). Geprüft war
+dabei alles, was sich prüfen ließ: das gMSA stand per `tokenGroups` in der Gruppe, die Gruppe stand
+in der `SeBatchLogonRight`-Liste (`secedit` und LSA-Abfrage), kein Eintrag in `SeDenyBatchLogonRight`.
+**Die Ursache ist bis heute ungeklärt.** Die Vermutung „eine GPO überschreibt das lokale Recht“
+trifft nur zu, wenn eine GPO dieses Recht überhaupt definiert – das war nicht belegt. Die Alternative,
+das Recht über die Default Domain Controllers Policy an eine Gruppe zu vergeben, wurde erwogen und
+verworfen (zu viel Eingriff für einen Hilfs-Task).
+
+**Entscheidung:** Der Task läuft als **SYSTEM**. Das Schreibrecht auf `member` der Zielgruppe
+bekommt das **Computerkonto des DC** (`DC7$`), per ACE auf der Gruppe. Damit gibt es kein
+Passwort, kein KDS und kein Batch-Recht. Der Preis: Jeder Prozess als SYSTEM auf dem DC kann diese
+Gruppe ändern – bei einem DC ohnehin der Fall. `-UseGmsa` bleibt als Option erhalten,
+`-RemoveGmsa` räumt ein früher angelegtes gMSA samt Rechten auf (ACE, Gruppenmitgliedschaften,
+Ordner-ACL; der KDS-Root-Key bleibt).
+
+**Weitere Lehren, die im Code stecken:**
+- **Event 4741 gibt es auch für gMSAs.** Das Skript prüft deshalb per `Get-ADObject` die
+  objectClass `computer` und überspringt alles andere (frühere Meldung „Konto nicht gefunden“
+  war irreführend).
+- **Das Security-Log durchsuchen ist zu langsam.** Bei 4 GB / 5 Mio. Einträgen dauerte die
+  4741-Suche 114 s. Der Trigger reicht deshalb `TargetUserName` per `ValueQueries` an den Task
+  durch (`-ComputerSam "$(TargetUser)"`); das Skript prüft nach der Registrierung per
+  `Export-ScheduledTask`, dass diese Definition wirklich im Task steht. Die Log-Suche bleibt nur als
+  Nachhol-Fallback.
+- **„Task lief“ heißt nicht „Task wirkt“.** `Test-TaskRun` wartet auf den echten Start und
+  wertet die Ergebniscodes aus (0x41303 = noch nie gelaufen, 0x41301 = läuft, 0x80070569 =
+  Anmeldetyp nicht gewährt). Der Selbsttest (`$(*`-Aufruf) prüft Log-Zugriff, OUs und
+  Schreibrecht per Probe (vorhandenes Mitglied erneut hinzufügen). Das ist **kein** vollständiger
+  Beweis; den liefert erst das erste echte neue Gerät (Logzeile `ADD <name>$ -> <Gruppe>`).
+- **PowerShell-Fallen:** Variablennamen sind case-insensitiv (`$useGmsa` und `$UseGmsa` waren
+  dieselbe Variable), `\"` ist kein Escape in PS-Strings, `.IsPresent` gibt es nur auf
+  Switch-Parametern, Array-Parameter über `powershell -File` kommen als ein String an (daher
+  `;` als Trenner bei `-OuDn`).
+- **Security-Log verkleinern:** Die maximale Größe lässt sich per `wevtutil sl Security /ms:<Bytes>`
+  senken; eine bereits größere Datei schrumpft erst beim Archivieren und Leeren
+  (`wevtutil epl` / `wevtutil cl`), nicht durch die Einstellung allein.
+
 ## Nicht hier: DeviceSyncer
 
 Das Übertragen von Computerzertifikaten aus AD in die `alternativeSecurityIds` der Entra-Geräte
