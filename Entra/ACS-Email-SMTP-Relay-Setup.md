@@ -1,6 +1,6 @@
 # Azure Communication Services – Email/SMTP-Relay: Setup-Doku
 
-Diese Doku hält fest, wie man einen ACS Communication Service für SMTP-Relay-Versand (z.B. für `Send-Notification` in `run-userHygieneProcess_cloud.ps1`) von Grund auf aufsetzt — inklusive aller Stolperfallen, die wir beim Aufbau des Test-Tenant-Setups (`comsvc-edge`, Tenant `zarenko.onmicrosoft.com`) getroffen haben. Das zugehörige Automatisierungsskript ist [New-AcsEmailRelay.ps1](New-AcsEmailRelay.ps1).
+Diese Doku hält fest, wie man einen ACS Communication Service für SMTP-Relay-Versand (z.B. für `Send-Notification` in `run-userHygieneProcess_cloud.ps1`) von Grund auf aufsetzt — inklusive aller Stolperfallen, die wir beim Aufbau des Test-Tenant-Setups (`comsvc-edge`, Tenant `contoso.onmicrosoft.com`) getroffen haben. Das zugehörige Automatisierungsskript ist [New-AcsEmailRelay.ps1](New-AcsEmailRelay.ps1).
 
 ## Architektur / benötigte Ressourcen
 

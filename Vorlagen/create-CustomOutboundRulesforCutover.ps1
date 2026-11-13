@@ -10,7 +10,7 @@ $domains2cutover = @('@alt.example.com')
 
 $domaincount = $domains2cutover.Count
 
-$remainingdomain = "@azitc75.onmicrosoft.com"
+$remainingdomain = "@contoso.onmicrosoft.com"
 $onpremUpnDomain2add = "@example.local"
 
 # Pfad zur Original Exportdatei mit diesen per UI exportierten Regeln

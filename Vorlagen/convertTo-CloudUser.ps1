@@ -6,7 +6,7 @@
 #Install-Module Microsoft.Graph.Entra -AllowPrerelease -Repository PSGallery -Force
 #Connect-Entra -Scopes 'User.Read.All,AuditLog.Read.All'
 
-$cloudTenant = "zarenko.onmicrosoft.com"
+$cloudTenant = "contoso.onmicrosoft.com"
 $cleandatetime = get-date -uformat "%Y-%m-%d_%H-%M-%S"
 $outfile="C:\Temp\AllUsersWithImmutableId"+"_"+$cleandatetime+".csv"
 

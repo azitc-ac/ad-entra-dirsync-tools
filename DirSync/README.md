@@ -113,7 +113,7 @@ das Recht über die Default Domain Controllers Policy an eine Gruppe zu vergeben
 verworfen (zu viel Eingriff für einen Hilfs-Task).
 
 **Entscheidung:** Der Task läuft als **SYSTEM**. Das Schreibrecht auf `member` der Zielgruppe
-bekommt das **Computerkonto des DC** (`DC7$`), per ACE auf der Gruppe. Damit gibt es kein
+bekommt das **Computerkonto des DC** (`DC01$`), per ACE auf der Gruppe. Damit gibt es kein
 Passwort, kein KDS und kein Batch-Recht. Der Preis: Jeder Prozess als SYSTEM auf dem DC kann diese
 Gruppe ändern – bei einem DC ohnehin der Fall. `-UseGmsa` bleibt als Option erhalten,
 `-RemoveGmsa` räumt ein früher angelegtes gMSA samt Rechten auf (ACE, Gruppenmitgliedschaften,
