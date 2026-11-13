@@ -23,7 +23,7 @@ Konfiguration, Tests oder Begleitwerkzeugen:
 | Repo | |
 |---|---|
 | [Invoke-ADAssessment](https://github.com/azitc-ac/Invoke-ADAssessment) | Bestandsaufnahme einer Domäne als HTML-Bericht, plus fünf LDAP-/DC-Prüfskripte |
-| [DeviceSyncer](https://github.com/azitc-ac/DeviceSyncer) | Hybrid-Geräte von AD nach Entra abgleichen, samt Einrichtung |
+| `DeviceSyncer` (nicht öffentlich) | Hybrid-Geräte von AD nach Entra abgleichen, samt Einrichtung |
 | [Send-SMTPOAuth](https://github.com/azitc-ac/Send-SMTPOAuth) | Mailversand über Exchange Online mit XOAUTH2 |
 | [exo-smtp-relay](https://github.com/azitc-ac/exo-smtp-relay) | SMTP-Relay als Dienst mit Weboberfläche |
 
